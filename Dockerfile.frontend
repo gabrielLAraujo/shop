@@ -13,12 +13,12 @@ RUN npm install
 # Copiar código fonte
 COPY frontend ./
 
-# Build arguments
+# Build arguments - usar placeholder que será substituído
 ARG VITE_API_URL
-ENV VITE_API_URL=${VITE_API_URL:-http://localhost:4000/api}
+ENV VITE_API_URL=${VITE_API_URL:-__VITE_API_URL_PLACEHOLDER__}
 
-# Build
-RUN npm run build || (echo "Build failed. Checking errors..." && cat /app/frontend/node_modules/.vite/deps/_metadata.json 2>/dev/null || true && exit 1)
+# Build com modo de produção
+RUN npm run build -- --mode production
 
 # Production stage com nginx
 FROM nginx:alpine
