@@ -1,0 +1,32 @@
+# Shop MVP - Cursor Rules
+
+Este projeto segue uma arquitetura específica. Mantenha estes padrões:
+
+## Backend (NestJS)
+- Use decorators do NestJS (@Controller, @Injectable, @Get, @Post, etc)
+- Sempre use DTOs com class-validator
+- Controllers apenas roteiam, lógica vai no Service
+- Use Prisma para queries
+- Sempre proteja rotas com @UseGuards(JwtAuthGuard)
+- Use ApiTags e ApiOperation do Swagger
+
+## Frontend (React)
+- Use TypeScript strict
+- Componentes funcionais com hooks
+- Shadcn/ui para UI components
+- Zustand para state management
+- React Hook Form + Zod para formulários
+- Axios para API calls
+- Toast (Sonner) para notificações
+
+## Estilo de Código
+- Português para logs e mensagens de erro
+- Inglês para código (variáveis, funções, etc)
+- Use formatCurrency e formatDate do utils
+- Use cn() para classes Tailwind
+
+## Estrutura
+- Backend: src/{módulo}/{controller|service|dto}/
+- Frontend: src/{pages|components|services|stores}/
+
+

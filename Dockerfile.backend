@@ -1,0 +1,42 @@
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+# Copiar package files
+COPY backend/package*.json ./backend/
+COPY package*.json ./
+
+# Install dependencies
+WORKDIR /app/backend
+RUN npm install
+
+# Copiar código fonte
+COPY backend ./
+
+# Generate Prisma Client
+RUN npx prisma generate
+
+# Build
+RUN npm run build
+
+# Production stage
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copiar apenas o necessário
+COPY --from=builder /app/backend/node_modules ./node_modules
+COPY --from=builder /app/backend/dist ./dist
+COPY --from=builder /app/backend/prisma ./prisma
+COPY --from=builder /app/backend/package*.json ./
+
+# Expor porta
+EXPOSE 4000
+
+# Healthcheck
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s \
+  CMD node -e "require('http').get('http://localhost:4000/api/auth/login', (res) => process.exit(res.statusCode === 400 ? 0 : 1))"
+
+# Start
+CMD ["npm", "run", "start:prod"]
+

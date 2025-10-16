@@ -1,0 +1,52 @@
+# Dependencies
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Environment files (usar secrets do Coolify)
+.env
+.env.local
+.env*.local
+backend/.env
+frontend/.env
+
+# Git
+.git
+.gitignore
+
+# Build outputs
+dist
+build
+*.tsbuildinfo
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Logs
+logs
+*.log
+
+# Testing
+coverage
+.nyc_output
+
+# Prisma
+backend/prisma/migrations
+backend/prisma/dev.db
+
+# Temporary
+*.tmp
+.temp
+.cache
+.DS_Store
+
+# Documentation (opcional, pode incluir se quiser)
+*.md
+!README.md
+
+# Scripts locais
+scripts/
+
