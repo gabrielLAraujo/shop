@@ -15,10 +15,10 @@ COPY frontend ./
 
 # Build arguments
 ARG VITE_API_URL
-ENV VITE_API_URL=${VITE_API_URL}
+ENV VITE_API_URL=${VITE_API_URL:-http://localhost:4000/api}
 
 # Build
-RUN npm run build
+RUN npm run build || (echo "Build failed. Checking errors..." && cat /app/frontend/node_modules/.vite/deps/_metadata.json 2>/dev/null || true && exit 1)
 
 # Production stage com nginx
 FROM nginx:alpine
